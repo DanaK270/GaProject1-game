@@ -6,7 +6,7 @@
 
 - the game starts by an empty 10X10 grid of blocks.
 - each round, you will be provided with 3 objets with usually different shapes.
-- you should place your objects in the grid to reach a full row or column. When you do that, this row or column will become empty again and you will gain points (one point for each block)
+- you should place your objects in the grid to reach a full row or column. When you do that, this row or column will become empty again to add new object! (NOTE: whenever you add an objects you will get points, one point per block)
 - keep doing that to reach highest score possible.
 - you lose when you have no enough space to put any of your objects.
 
