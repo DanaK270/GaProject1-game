@@ -1,6 +1,6 @@
 # 1010 Game!
 
-### The idea of the game is to get the highest possible score. your score increses when you make a full row or column of objects. you lose when you have no enough space to put any of your objects.
+### The idea of the game is to get the highest possible score. your score increases when you make a full row or column of objects. you lose when you have no enough space to put any of your objects.
 
 ### 1. How to Play?
 
