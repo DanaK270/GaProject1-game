@@ -1,5 +1,14 @@
 # 1010 Game!
 
+## Date: 5/9/2024
+
+### By: Dana Alebrahim
+
+[Github](https://github.com/DanaK270) |
+[Linkdin](https://www.linkedin.com/in/dana-alebrahim-a22716267/)
+
+##
+
 ### The idea of the game is to get the highest possible score. your score increases when you make a full row or column of objects. you lose when you have no enough space to put any of your objects.
 
 ### 1. How to Play?
@@ -22,3 +31,4 @@ view the wirefarmes folder to see how the game would look like!
 - Enable the user to select an object to put, highlight the space it might allocate when the user hovers over the different blocks, and place the object in that place when the user clicks
 - Increase the score each time the user adds an object
 - Create a function that checks for full rows/columns and empty them
+- Create a "lose" function that ends the game when the user have no enough space to put any of the 3 presented objects
