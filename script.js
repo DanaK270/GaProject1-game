@@ -135,19 +135,44 @@ const renderShapes = () => {
   }
 }
 
+let selectedShape = null
+
 const createShape = (shape) => {
   const shapeElem = document.createElement('div')
   shapeElem.style.display = 'grid'
   shapeElem.style.gap = '5px'
-  shapeElem.style.gridTemplateColumns = `repeat(  5  , 40px)`
-  shapeElem.style.gridTemplateRows = `repeat(  5  , 40px)`
+  shapeElem.style.gridTemplateColumns = `repeat(  5  , 30px)`
+  shapeElem.style.gridTemplateRows = `repeat(  5  , 30px)`
+  shapeElem.style.cursor = 'pointer'
+
+  const shapeCells = []
+
   for (i = 0; i < 5; i++) {
     for (j = 0; j < 5; j++) {
       const shapeCell = document.createElement('div')
       shapeElem.appendChild(shapeCell)
       if (shape[i][j] === 1) shapeCell.style.backgroundColor = 'pink'
+      shapeCells.push(shapeCell)
     }
   }
+
+  shapeElem.addEventListener('click', () => {
+    // remove shadow from the prev selected shape
+    if (selectedShape) {
+      selectedShape.forEach((cell) => (cell.style.boxShadow = 'none'))
+    }
+
+    // add shadow to the clicked shape
+    shapeCells.forEach((cell) => {
+      if (cell.style.backgroundColor === 'pink') {
+        cell.style.boxShadow = '0 0 15px 3px rgba(0, 0, 0, 0.5)'
+      }
+    })
+
+    // Update the selected shape
+    selectedShape = shapeCells
+  })
+
   shapeCont.appendChild(shapeElem)
 }
 
