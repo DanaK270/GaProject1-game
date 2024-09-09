@@ -2,6 +2,8 @@ const board = document.getElementById('board')
 const cells = []
 const cellValues = []
 const shapeCont = document.getElementById('shapes-cont')
+let selectedShape = null
+let selectedShapeLogic = []
 const shapes = [
   // single bock
   [
@@ -117,21 +119,6 @@ const shapes = [
   ]
 ]
 
-const initBoard = () => {
-  for (let i = 0; i < 100; i++) {
-    const cell = document.createElement('div')
-    board.appendChild(cell)
-    cells.push(cell)
-  }
-  for (let i = 0; i < 10; i++) {
-    cellValues.push([])
-    for (let j = 0; j < 10; j++) {
-      cellValues[i].push(0)
-    }
-  }
-  console.log(cellValues)
-}
-
 const renderShapes = () => {
   // clear the prev shapes
   shapeCont.innerHTML = ''
@@ -142,8 +129,6 @@ const renderShapes = () => {
     createShape(shape)
   }
 }
-
-let selectedShape = null
 
 const createShape = (shape) => {
   const shapeElem = document.createElement('div')
@@ -179,9 +164,79 @@ const createShape = (shape) => {
 
     // Update the selected shape
     selectedShape = shapeCells
+    selectedShapeLogic = shape
   })
 
   shapeCont.appendChild(shapeElem)
+}
+
+const highlightShape = (row, col) => {
+  console.log('here')
+  console.log('row: ' + row)
+  console.log('col: ' + col)
+  if (selectedShape) {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (selectedShapeLogic[i][j] === 1) {
+          updatedRow = row + i
+          updatedCol = col + j
+          if (
+            updatedRow > 0 &&
+            updatedRow < 10 &&
+            updatedCol > 0 &&
+            updatedCol < 10
+          )
+            cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
+        }
+      }
+    }
+  }
+}
+
+const removeHighlightShape = (row, col) => {
+  console.log('here')
+  console.log('row: ' + row)
+  console.log('col: ' + col)
+  if (selectedShape) {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (selectedShapeLogic[i][j] === 1) {
+          updatedRow = row + i
+          updatedCol = col + j
+          cells[updatedRow * 10 + updatedCol].style.backgroundColor =
+            'rgb(205, 189, 166)'
+        }
+      }
+    }
+  }
+}
+
+const initBoard = () => {
+  for (let i = 0; i < 100; i++) {
+    const cell = document.createElement('div')
+    board.appendChild(cell)
+    cells.push(cell)
+    console.log(cell)
+    console.log('at ' + i)
+
+    cell.addEventListener('mouseover', () => {
+      const cellRow = parseInt(i / 10)
+      const cellCol = i % 10
+      highlightShape(cellRow, cellCol)
+    })
+
+    cell.addEventListener('mouseout', () => {
+      const cellRow = parseInt(i / 10)
+      const cellCol = i % 10
+      removeHighlightShape(cellRow, cellCol)
+    })
+  }
+  for (let i = 0; i < 10; i++) {
+    cellValues.push([])
+    for (let j = 0; j < 10; j++) {
+      cellValues[i].push(0)
+    }
+  }
 }
 
 initBoard()
