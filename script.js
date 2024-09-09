@@ -4,6 +4,9 @@ const cellValues = []
 const shapeCont = document.getElementById('shapes-cont')
 let selectedShape = null
 let selectedShapeLogic = []
+const scoreElem = document.getElementById('score').lastElementChild
+let score = 0
+scoreElem.textContent = score
 const shapes = [
   // single bock
   [
@@ -118,11 +121,12 @@ const shapes = [
     [0, 0, 0, 0, 0]
   ]
 ]
-
+let numOfShapes
 const renderShapes = () => {
   // clear the prev shapes
   shapeCont.innerHTML = ''
   //select 3 new shapes
+  numOfShapes = 3
   for (let i = 0; i < 3; i++) {
     const shape = shapes[Math.floor(Math.random() * shapes.length)]
     console.log(shape) //temp
@@ -174,6 +178,10 @@ const highlightShape = (row, col) => {
   console.log('here')
   console.log('row: ' + row)
   console.log('col: ' + col)
+  const startCell = cells[row * 10 + col] //the cell where the shape placement starts
+  startCell.addEventListener('click', () => {
+    placeShape(row, col)
+  })
   if (selectedShape) {
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
@@ -203,8 +211,11 @@ const removeHighlightShape = (row, col) => {
         if (selectedShapeLogic[i][j] === 1) {
           updatedRow = row + i
           updatedCol = col + j
-          cells[updatedRow * 10 + updatedCol].style.backgroundColor =
-            'rgb(205, 189, 166)'
+          if (cellValues[updatedRow * 10 + updatedCol] === 0) {
+            //to check if the cell is placed or not
+            cells[updatedRow * 10 + updatedCol].style.backgroundColor =
+              'rgb(205, 189, 166)'
+          }
         }
       }
     }
@@ -232,12 +243,89 @@ const initBoard = () => {
     })
   }
   for (let i = 0; i < 10; i++) {
-    cellValues.push([])
+    //cellValues.push([])
     for (let j = 0; j < 10; j++) {
-      cellValues[i].push(0)
+      cellValues.push(0)
     }
   }
 }
 
 initBoard()
 renderShapes()
+
+/* i should create a function that is called inside the highlight function when the user clicks on the cell (event)
+the function should first check if the shape can be placed 
+
+1- update the score by the count of the shape ( i should add a global scor=0 first ) 
+2- update the relevant cellsvalues to 1 
+3- update the relevant board cells to pink
+4- deselect the shape and make it hidden
+*/
+
+const placeShape = (row, col) => {
+  let canPlace = true
+  let shapePoints = 0
+
+  if (selectedShape) {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (selectedShapeLogic[i][j] === 1) {
+          updatedRow = row + i
+          updatedCol = col + j
+          if (
+            //check if the cell is within the borders of the grid
+            updatedRow >= 0 &&
+            updatedRow < 10 &&
+            updatedCol >= 0 &&
+            updatedCol < 10
+          ) {
+            if (cellValues[updatedRow * 10 + updatedCol] === 1) {
+              canPlace = false
+              break
+            }
+          } else {
+            canPlace = false
+            break
+          }
+        }
+      }
+    }
+
+    if (canPlace) {
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+          if (selectedShapeLogic[i][j] === 1) {
+            updatedRow = row + i
+            updatedCol = col + j
+            if (
+              updatedRow >= 0 &&
+              updatedRow < 10 &&
+              updatedCol >= 0 &&
+              updatedCol < 10
+            ) {
+              cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
+              cellValues[updatedRow * 10 + updatedCol] = 1
+              shapePoints++
+            }
+          }
+        }
+      }
+      score += shapePoints
+      scoreElem.textContent = score
+      numOfShapes--
+
+      //hide the placed shape and deselect it
+      selectedShape.forEach((cell) => (cell.style.display = 'none'))
+      selectedShape = null
+      selectedShapeLogic = []
+
+      // render shapes again if all the presented shapes are placed
+      if (numOfShapes == 0) {
+        renderShapes()
+      }
+    } else {
+      alert("shape can't be placed here")
+    }
+    console.log(cellValues)
+  }
+}
