@@ -333,11 +333,6 @@ const placeShape = (row, col) => {
 
 // a func that checks fo full rows or cols
 const checkRowCol = () => {
-  /*
-  - loop over the cellValues to check if there is a row/col full of 1's
-  - if there is, change the bg color of "cells" this row/col to rgb(205, 189, 166) & the value of "cellValues" to 0
-  - NOTE: i need to keep the row/col num that i am checking now somewhere and if one if its cells is 0 then i can just go to the next
-  */
   let fullRows = []
   let fullCols = []
 
