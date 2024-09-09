@@ -181,9 +181,9 @@ const highlightShape = (row, col) => {
           updatedRow = row + i
           updatedCol = col + j
           if (
-            updatedRow > 0 &&
+            updatedRow >= 0 &&
             updatedRow < 10 &&
-            updatedCol > 0 &&
+            updatedCol >= 0 &&
             updatedCol < 10
           )
             cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
