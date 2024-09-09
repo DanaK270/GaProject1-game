@@ -349,7 +349,12 @@ const checkRowCol = () => {
         break
       }
     }
-    if (fullRow) fullRows.push(i)
+    if (fullRow) {
+      for (let j = 0; j < 10; j++) {
+        cellValues[i * 10 + j] = 0
+        cells[i * 10 + j].style.backgroundColor = 'rgb(205, 189, 166)'
+      }
+    }
   }
   for (let i = 0; i < 10; i++) {
     let fullCol = true
@@ -359,7 +364,12 @@ const checkRowCol = () => {
         break
       }
     }
-    if (fullCol) fullCols.push(i)
+    if (fullCol) {
+      for (let j = 0; j < 10; j++) {
+        cellValues[j * 10 + i] = 0
+        cells[j * 10 + i].style.backgroundColor = 'rgb(205, 189, 166)'
+      }
+    }
   }
 
   console.log('full rows: ' + fullRows)
