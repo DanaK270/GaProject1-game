@@ -1,9 +1,9 @@
 const board = document.getElementById('board')
-const cells = []
-const cellValues = []
+const cells = [] //an array of cells DOM
+const cellValues = [] //an array of cells 0's and 1's
 const shapeCont = document.getElementById('shapes-cont')
-let selectedShape = null
-let selectedShapeLogic = []
+let selectedShape = null //selected shape DOM
+let selectedShapeLogic = [] //selected shape in 0's and 1's
 const scoreElem = document.getElementById('score').lastElementChild
 let score = 0
 scoreElem.textContent = score
@@ -121,11 +121,13 @@ const shapes = [
     [0, 0, 0, 0, 0]
   ]
 ]
-let numOfShapes
+let numOfShapes // to keep track of how many shapes are displayed now
+
+// a func to render the 3 shapes
 const renderShapes = () => {
   // clear the prev shapes
   shapeCont.innerHTML = ''
-  //select 3 new shapes
+  // select 3 new shapes
   numOfShapes = 3
   for (let i = 0; i < 3; i++) {
     const shape = shapes[Math.floor(Math.random() * shapes.length)]
@@ -134,6 +136,7 @@ const renderShapes = () => {
   }
 }
 
+// a func to create the shapes and keep track of the selected shape
 const createShape = (shape) => {
   const shapeElem = document.createElement('div')
   shapeElem.style.display = 'grid'
@@ -142,11 +145,11 @@ const createShape = (shape) => {
   shapeElem.style.gridTemplateRows = `repeat(  5  , 30px)`
   shapeElem.style.cursor = 'pointer'
 
-  const shapeCells = []
+  const shapeCells = [] //an array of all the cells of the shape
 
   for (i = 0; i < 5; i++) {
     for (j = 0; j < 5; j++) {
-      const shapeCell = document.createElement('div')
+      const shapeCell = document.createElement('div') //a cell of the shape
       shapeElem.appendChild(shapeCell)
       if (shape[i][j] === 1) shapeCell.style.backgroundColor = 'pink'
       shapeCells.push(shapeCell)
@@ -174,6 +177,7 @@ const createShape = (shape) => {
   shapeCont.appendChild(shapeElem)
 }
 
+// a func to highlight the space the shape would allocte it the board when hover over the board cells
 const highlightShape = (row, col) => {
   console.log('here')
   console.log('row: ' + row)
@@ -203,6 +207,7 @@ const highlightShape = (row, col) => {
   }
 }
 
+// a func to remove highlight of the shape when un-hover over the board cells
 const removeHighlightShape = (row, col) => {
   console.log('here')
   console.log('row: ' + row)
@@ -224,6 +229,7 @@ const removeHighlightShape = (row, col) => {
   }
 }
 
+// a func to initlize the board
 const initBoard = () => {
   for (let i = 0; i < 100; i++) {
     const cell = document.createElement('div')
@@ -252,6 +258,7 @@ const initBoard = () => {
   }
 }
 
+// a func to place the selected shape in the board
 const placeShape = (row, col) => {
   let canPlace = true
   let shapePoints = 0
@@ -305,6 +312,9 @@ const placeShape = (row, col) => {
       scoreElem.textContent = score
       numOfShapes--
 
+      // check for full rows/cols
+      checkRowCol()
+
       //hide the placed shape and deselect it
       selectedShape.forEach((cell) => (cell.style.display = 'none'))
       selectedShape = null
@@ -319,6 +329,41 @@ const placeShape = (row, col) => {
     }
     console.log(cellValues)
   }
+}
+
+// a func that checks fo full rows or cols
+const checkRowCol = () => {
+  /*
+  - loop over the cellValues to check if there is a row/col full of 1's
+  - if there is, change the bg color of "cells" this row/col to rgb(205, 189, 166) & the value of "cellValues" to 0
+  - NOTE: i need to keep the row/col num that i am checking now somewhere and if one if its cells is 0 then i can just go to the next
+  */
+  let fullRows = []
+  let fullCols = []
+
+  for (let i = 0; i < 10; i++) {
+    let fullRow = true
+    for (let j = 0; j < 10; j++) {
+      if (cellValues[i * 10 + j] === 0) {
+        fullRow = false
+        break
+      }
+    }
+    if (fullRow) fullRows.push(i)
+  }
+  for (let i = 0; i < 10; i++) {
+    let fullCol = true
+    for (let j = 0; j < 10; j++) {
+      if (cellValues[j * 10 + i] === 0) {
+        fullCol = false
+        break
+      }
+    }
+    if (fullCol) fullCols.push(i)
+  }
+
+  console.log('full rows: ' + fullRows)
+  console.log('full cols: ' + fullCols)
 }
 
 initBoard()
