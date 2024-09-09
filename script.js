@@ -194,7 +194,9 @@ const highlightShape = (row, col) => {
             updatedCol >= 0 &&
             updatedCol < 10
           )
-            cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
+            if (cellValues[updatedRow * 10 + updatedCol] === 0) {
+              cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
+            }
         }
       }
     }
@@ -250,18 +252,6 @@ const initBoard = () => {
   }
 }
 
-initBoard()
-renderShapes()
-
-/* i should create a function that is called inside the highlight function when the user clicks on the cell (event)
-the function should first check if the shape can be placed 
-
-1- update the score by the count of the shape ( i should add a global scor=0 first ) 
-2- update the relevant cellsvalues to 1 
-3- update the relevant board cells to pink
-4- deselect the shape and make it hidden
-*/
-
 const placeShape = (row, col) => {
   let canPlace = true
   let shapePoints = 0
@@ -303,7 +293,8 @@ const placeShape = (row, col) => {
               updatedCol >= 0 &&
               updatedCol < 10
             ) {
-              cells[updatedRow * 10 + updatedCol].style.backgroundColor = 'pink'
+              cells[updatedRow * 10 + updatedCol].style.backgroundColor =
+                'palevioletred'
               cellValues[updatedRow * 10 + updatedCol] = 1
               shapePoints++
             }
@@ -329,3 +320,6 @@ const placeShape = (row, col) => {
     console.log(cellValues)
   }
 }
+
+initBoard()
+renderShapes()
