@@ -371,5 +371,13 @@ const checkRowCol = () => {
   console.log('full cols: ' + fullCols)
 }
 
+// losing funcion
+/*
+- i need to save the presented shape in an array 
+- add a local flag thereIsSpace=false
+- go throgh them and check if each and check if at least one can be placed, if yes make thereIsSpace=true and just return nothing
+- if none can be placed, alert(`Game Ended! \nYour score is ${score} `)
+*/
+
 initBoard()
 renderShapes()
