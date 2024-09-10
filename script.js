@@ -262,16 +262,6 @@ const initBoard = () => {
   }
 }
 
-/*
-const index = array.indexOf(5);
-if (index > -1) { // only splice array when item is found
-  array.splice(index, 1); // 2nd parameter means remove one item only
-}
-
-// array = [2, 9]
-console.log(array); 
-*/
-
 // a func to place the selected shape in the board
 const placeShape = (row, col) => {
   let canPlace = true
@@ -285,16 +275,12 @@ const placeShape = (row, col) => {
           updatedCol = col + j
           if (
             //check if the cell is within the borders of the grid
-            updatedRow >= 0 &&
-            updatedRow < 10 &&
-            updatedCol >= 0 &&
-            updatedCol < 10
+            updatedRow < 0 ||
+            updatedRow >= 10 ||
+            updatedCol < 0 ||
+            updatedCol >= 10 ||
+            cellValues[updatedRow * 10 + updatedCol] === 1
           ) {
-            if (cellValues[updatedRow * 10 + updatedCol] === 1) {
-              canPlace = false
-              break
-            }
-          } else {
             canPlace = false
             break
           }
@@ -331,8 +317,7 @@ const placeShape = (row, col) => {
       console.log(selectedShapeLogic)
 
       if (index > -1) {
-        // only splice array when item is found
-        presentedShapes.splice(index, 1) // 2nd parameter means remove one item only
+        presentedShapes.splice(index, 1)
       }
 
       console.log('updated presentedShapes: ')
@@ -350,6 +335,8 @@ const placeShape = (row, col) => {
       if (numOfShapes == 0) {
         renderShapes()
       }
+
+      lose()
     } else {
       alert("shape can't be placed here")
     }
@@ -398,12 +385,56 @@ const checkRowCol = () => {
 }
 
 // losing funcion
-/*
-- i need to save the presented shapes in an array //Done 
-- add a local flag thereIsSpace=false
-- go throgh them and check if each and check if at least one can be placed, if yes make thereIsSpace=true and just return nothing
-- if none can be placed, alert(`Game Ended! \nYour score is ${score} `)
-*/
+const lose = () => {
+  let thereIsSpace = false
+
+  // check all presented shapes
+  for (let i = 0; i < presentedShapes.length; i++) {
+    const shape = presentedShapes[i]
+
+    // try placing the shape at every possible position on the board
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        let canPlace = true
+
+        // check if the shape can be placed at the startinf cell at (row, col)
+        for (let j = 0; j < 5; j++) {
+          for (let k = 0; k < 5; k++) {
+            if (shape[j][k] === 1) {
+              let updatedRow = row + j
+              let updatedCol = col + k
+
+              if (
+                updatedRow < 0 ||
+                updatedRow >= 10 ||
+                updatedCol < 0 ||
+                updatedCol >= 10 ||
+                cellValues[updatedRow * 10 + updatedCol] === 1 //if the cell of the grid is already occupied
+              ) {
+                canPlace = false
+                break
+              }
+            }
+          }
+          if (!canPlace) break
+        }
+
+        if (canPlace) {
+          thereIsSpace = true
+          break
+        }
+      }
+      if (thereIsSpace) break
+    }
+
+    if (thereIsSpace) break
+  }
+
+  if (!thereIsSpace) {
+    alert(`Game Ended! \nYour score is ${score}`)
+    location.reload()
+  }
+}
 
 initBoard()
 renderShapes()
