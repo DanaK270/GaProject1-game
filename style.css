@@ -5,7 +5,7 @@ body {
   min-height: 100vh;
   margin: 10px;
   background-color: rgb(36, 36, 36);
-  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  font-family: 'Nerko One', cursive;
 }
 
 .container {
@@ -23,6 +23,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  border-radius: 0px 0px 5px 5px;
 }
 
 h2 {
@@ -71,4 +72,37 @@ h2 {
   width: 100%;
   flex: 11;
   height: 100%;
+}
+
+.home-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(247, 231, 207);
+  height: 39rem;
+  width: 80rem;
+}
+
+.gameTitle {
+  font-family: 'Nerko One', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 10rem;
+  color: aliceblue;
+  text-shadow: 0 0 3px black, 0 0 6px pink, 2px 2px 8px pink, 4px 4px 10px pink,
+    6px 6px 12px pink;
+}
+
+button {
+  font-size: 3rem;
+  background-color: rgb(230, 155, 185);
+  border: 1px;
+  border-radius: 5px;
+}
+a {
+  margin: 1rem;
+  font-family: 'Nerko One', cursive;
+  text-decoration: none;
+  color: rgb(43, 43, 43);
 }
