@@ -432,7 +432,7 @@ const lose = () => {
 
   if (!thereIsSpace) {
     alert(`Game Ended! \nYour score is ${score}`)
-    location.reload()
+    location.href = 'home.html'
   }
 }
 
