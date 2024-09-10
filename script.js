@@ -5,6 +5,7 @@ const shapeCont = document.getElementById('shapes-cont')
 let selectedShape = null //selected shape DOM
 let selectedShapeLogic = [] //selected shape in 0's and 1's
 const scoreElem = document.getElementById('score').lastElementChild
+presentedShapes = []
 let score = 0
 scoreElem.textContent = score
 const shapes = [
@@ -133,7 +134,10 @@ const renderShapes = () => {
     const shape = shapes[Math.floor(Math.random() * shapes.length)]
     console.log(shape) //temp
     createShape(shape)
+    presentedShapes.push(shape)
   }
+  console.log('p shapes ')
+  console.log(presentedShapes)
 }
 
 // a func to create the shapes and keep track of the selected shape
@@ -258,6 +262,16 @@ const initBoard = () => {
   }
 }
 
+/*
+const index = array.indexOf(5);
+if (index > -1) { // only splice array when item is found
+  array.splice(index, 1); // 2nd parameter means remove one item only
+}
+
+// array = [2, 9]
+console.log(array); 
+*/
+
 // a func to place the selected shape in the board
 const placeShape = (row, col) => {
   let canPlace = true
@@ -311,6 +325,18 @@ const placeShape = (row, col) => {
       score += shapePoints
       scoreElem.textContent = score
       numOfShapes--
+      const index = presentedShapes.indexOf(selectedShapeLogic)
+      console.log('ind ' + index)
+      console.log('sle presentedShapes: ')
+      console.log(selectedShapeLogic)
+
+      if (index > -1) {
+        // only splice array when item is found
+        presentedShapes.splice(index, 1) // 2nd parameter means remove one item only
+      }
+
+      console.log('updated presentedShapes: ')
+      console.log(presentedShapes)
 
       // check for full rows/cols
       checkRowCol()
@@ -373,7 +399,7 @@ const checkRowCol = () => {
 
 // losing funcion
 /*
-- i need to save the presented shape in an array 
+- i need to save the presented shapes in an array //Done 
 - add a local flag thereIsSpace=false
 - go throgh them and check if each and check if at least one can be placed, if yes make thereIsSpace=true and just return nothing
 - if none can be placed, alert(`Game Ended! \nYour score is ${score} `)
