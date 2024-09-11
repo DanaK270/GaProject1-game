@@ -255,7 +255,6 @@ const initBoard = () => {
     })
   }
   for (let i = 0; i < 10; i++) {
-    //cellValues.push([])
     for (let j = 0; j < 10; j++) {
       cellValues.push(0)
     }
