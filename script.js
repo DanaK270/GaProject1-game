@@ -410,7 +410,7 @@ const lose = () => {
 
   if (!thereIsSpace) {
     alert(`Game Ended! \nYour score is ${score}`)
-    location.href = 'home.html'
+    location.href = 'index.html'
   }
 }
 
