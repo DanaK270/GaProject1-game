@@ -132,12 +132,9 @@ const renderShapes = () => {
   numOfShapes = 3
   for (let i = 0; i < 3; i++) {
     const shape = shapes[Math.floor(Math.random() * shapes.length)]
-    console.log(shape) //temp
     createShape(shape)
     presentedShapes.push(shape)
   }
-  console.log('p shapes ')
-  console.log(presentedShapes)
 }
 
 // a func to create the shapes and keep track of the selected shape
@@ -183,9 +180,6 @@ const createShape = (shape) => {
 
 // a func to highlight the space the shape would allocte it the board when hover over the board cells
 const highlightShape = (row, col) => {
-  console.log('here')
-  console.log('row: ' + row)
-  console.log('col: ' + col)
   const startCell = cells[row * 10 + col] //the cell where the shape placement starts
   startCell.addEventListener('click', () => {
     placeShape(row, col)
@@ -213,9 +207,6 @@ const highlightShape = (row, col) => {
 
 // a func to remove highlight of the shape when un-hover over the board cells
 const removeHighlightShape = (row, col) => {
-  console.log('here')
-  console.log('row: ' + row)
-  console.log('col: ' + col)
   if (selectedShape) {
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
@@ -239,8 +230,6 @@ const initBoard = () => {
     const cell = document.createElement('div')
     board.appendChild(cell)
     cells.push(cell)
-    console.log(cell)
-    console.log('at ' + i)
 
     cell.addEventListener('mouseover', () => {
       const cellRow = parseInt(i / 10)
@@ -311,16 +300,10 @@ const placeShape = (row, col) => {
       scoreElem.textContent = score
       numOfShapes--
       const index = presentedShapes.indexOf(selectedShapeLogic)
-      console.log('ind ' + index)
-      console.log('sle presentedShapes: ')
-      console.log(selectedShapeLogic)
 
       if (index > -1) {
         presentedShapes.splice(index, 1)
       }
-
-      console.log('updated presentedShapes: ')
-      console.log(presentedShapes)
 
       // check for full rows/cols
       checkRowCol()
@@ -339,7 +322,6 @@ const placeShape = (row, col) => {
     } else {
       alert("shape can't be placed here")
     }
-    console.log(cellValues)
   }
 }
 
@@ -378,9 +360,6 @@ const checkRowCol = () => {
       }
     }
   }
-
-  console.log('full rows: ' + fullRows)
-  console.log('full cols: ' + fullCols)
 }
 
 // losing funcion
